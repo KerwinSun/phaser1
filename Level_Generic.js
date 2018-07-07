@@ -59,6 +59,8 @@ class Level_Generic extends Phaser.Scene {
             this.cat.y -= 3;
             this.trace.push([this.cat.x,this.cat.y]);
         }
+
+        //press spacebar to trace
         if(this.key_SPACE.isDown){
             this.traceRoute(this.trace);
         }
