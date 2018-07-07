@@ -20,11 +20,14 @@ class Level_Generic extends Phaser.Scene {
 
     create(){
 
+        //useful vars to track
+        this.gameActive = true;
+
         //record location where entity travelled
         this.trace = [];
         this.graphics = this.add.graphics(100, 100);
         this.graphics.lineStyle(5, 0xFF00FF);
-
+        console.log(this)
 
         //add ball entity
         this.cat = this.physics.add.image(0, 0, 'cat');
@@ -41,31 +44,45 @@ class Level_Generic extends Phaser.Scene {
         this.key_S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+
+
+
     }
 
     update(delta){
 
 
         if(this.key_A.isDown){
-            this.cat.x -= 3;
+            this.cat.x -= 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
         if(this.key_D.isDown){
-            this.cat.x += 3;
+            this.cat.x += 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
         if(this.key_S.isDown){
-            this.cat.y += 3;
+            this.cat.y += 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
         if(this.key_W.isDown){
-            this.cat.y -= 3;
+            this.cat.y -= 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
 
         //press spacebar to trace
-        if(this.key_SPACE.isDown){
-            this.traceRoute(this.trace);
+        if(this.key_SPACE.isDown && this.gameActive){
+
+            this.gameActive = false;
+            //set up draw
+            this.graphics.beginPath();
+            this.graphics.moveTo(0, 0);
+            console.log(this.timedEvent);
+            this.timedEvent = this.time.addEvent({ delay: 10, callback: this.traceRoute, callbackScope: this, loop: true });
+
+            //complete draw
+
+
         }
 
     }
@@ -75,19 +92,18 @@ class Level_Generic extends Phaser.Scene {
         this.cat.y = 0;
     }
 
-    traceRoute(trace){
+    traceRoute(){
 
-        this.graphics.beginPath();
-        this.graphics.moveTo(0, 0);
+        console.log("tracing")
+        this.graphics.lineTo(this.trace[0][0],this.trace[0][1]);
+        this.graphics.strokePath();
+        this.trace.splice(0,1);
+        if(this.trace.length < 1){
 
-
-        for (var i = 0; i < trace.length; i++) {
-
-            this.graphics.lineTo(trace[i][0], trace[i][1]);
+            this.timedEvent.destroy();
 
         }
 
-        this.graphics.strokePath();
     }
 
 }
