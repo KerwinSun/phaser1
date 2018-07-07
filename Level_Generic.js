@@ -8,7 +8,10 @@ class Level_Generic extends Phaser.Scene {
 
     preload(){
 
-        console.log("preload");
+        //allows for file system run
+        this.load.crossOrigin = false;
+
+        //preload assets images
         this.load.image('ball','assets/ball.png');
         this.load.image('man','assets/man.png');
         this.load.image('cat','assets/cat.PNG');
