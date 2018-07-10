@@ -2,18 +2,20 @@ class Level_Generic extends Phaser.Scene {
 
     constructor() {
 
-        super({key:"Level_Generic"});
+        super();
 
     }
 
     preload(){
 
+
+
         //allows for file system run
         this.load.crossOrigin = false;
 
         //preload assets images
-        this.load.image('ball','assets/ball.png');
-        this.load.image('cat','assets/cat.PNG');
+        this.load.image(this.scene.key + 'ball','assets/ball.png');
+        this.load.image(this.scene.key + 'cat','assets/cat.PNG');
 
     }
 
@@ -27,10 +29,6 @@ class Level_Generic extends Phaser.Scene {
         this.cameras.main.y = data.y;
         this.cameras.main.width = 200;
         this.cameras.main.height = 200;
-
-        this.zzx = data.x - this.cameras.main.width/2;
-        this.zzy = data.y - this.cameras.main.height/2;
-
         //useful vars to track
         this.gameActive = true;
 
@@ -41,8 +39,10 @@ class Level_Generic extends Phaser.Scene {
         console.log(this)
 
         //add ball entity/ cat entity/ background entity
-        this.cat = this.physics.add.image(this.zzx +  20, this.zzy + 20, 'cat');
-        this.ball = this.physics.add.image(data.x, data.y,'ball');
+        this.cat = this.physics.add.image(20, 20, this.scene.key + 'cat');
+        this.ball = this.physics.add.image(100, 100, this.scene.key + 'ball');
+
+
         this.cat.scaleX = 0.2;
         this.cat.scaleY = 0.2;
         this.ball.scaleX = 0.5;

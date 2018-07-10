@@ -14,6 +14,7 @@ class Example1 extends Phaser.Scene {
 
     create(){
 
+
        this.ball = this.add.image(data.x,data.y,'ball');
 
         this.input.keyboard.on('keyup_D',function(event){
