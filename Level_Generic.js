@@ -30,16 +30,18 @@ class Level_Generic extends Phaser.Scene {
         //useful vars to track
         this.gameActive = true;
 
-        //record location where entity travelled
-        this.trace = [];
-        this.graphics = this.add.graphics(100, 100);
-        this.graphics.lineStyle(5, 0xFF00FF);
-        console.log(this)
+
 
         //add ball entity/ cat entity/ background entity
         this.cat = this.physics.add.image(20, 20, this.scene.key + 'cat');
         this.ball = this.physics.add.image(100, 100, this.scene.key + 'ball');
 
+
+        //record location where entity travelled
+        this.trace = [[this.cat.x,this.cat.y]];
+        this.graphics = this.add.graphics(100, 100);
+        this.graphics.lineStyle(5, 0xFF00FF);
+        console.log(this)
 
         this.cat.scaleX = 0.2;
         this.cat.scaleY = 0.2;
@@ -47,7 +49,7 @@ class Level_Generic extends Phaser.Scene {
         this.ball.scaleY = 0.5;
 
         //add collision to ball
-        this.physics.add.overlap(this.cat,this.ball, this.detect, null, this);
+        this.physics.add.overlap(this.cat,this.ball, this.startTrace, null, this);
 
         //set key polls
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -56,17 +58,12 @@ class Level_Generic extends Phaser.Scene {
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        console.log(this.cat)
-
-
-
     }
 
     update(delta){
 
 
         if(this.key_A.isDown){
-            console.log(this.scene.key)
             this.cat.x -= 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
@@ -86,12 +83,8 @@ class Level_Generic extends Phaser.Scene {
         //press spacebar to trace
         if(this.key_SPACE.isDown && this.gameActive){
 
-            this.gameActive = false;
-            //set up draw
-            this.graphics.beginPath();
-            this.graphics.moveTo(this.trace[0][0], this.trace[0][1]);
-            console.log(this.timedEvent);
-            this.timedEvent = this.time.addEvent({ delay: 10, callback: this.traceRoute, callbackScope: this, loop: true });
+
+            this.startTrace();
 
             //complete draw
 
@@ -100,21 +93,30 @@ class Level_Generic extends Phaser.Scene {
 
     }
 
-    detect() {
-        this.cat.x = 0;
-        this.cat.y = 0;
-            console.log('down');
-            this.scene.pause();
-            this.scene.resume('Level_Generic2');
+    startTrace(){
 
+        //set up draw
+
+        if(this.gameActive) {
+            this.graphics.beginPath();
+            this.graphics.moveTo(this.cat.x, this.cat.y);
+            this.timedEvent = this.time.addEvent({
+                delay: 10,
+                callback: this.traceRoute,
+                callbackScope: this,
+                loop: true
+            });
+        }
+        this.gameActive = false;
     }
 
     traceRoute(){
 
-        console.log("tracing")
-        this.graphics.lineTo(this.trace[0][0],this.trace[0][1]);
+        this.cat.x = this.trace[this.trace.length - 1][0];
+        this.cat.y = this.trace[this.trace.length - 1][1];
+        this.graphics.lineTo(this.trace[this.trace.length - 1][0],this.trace[this.trace.length - 1][1]);
         this.graphics.strokePath();
-        this.trace.splice(0,1);
+        this.trace.splice(this.trace.length - 1,1);
         if(this.trace.length < 1){
 
             this.timedEvent.destroy();
@@ -122,5 +124,18 @@ class Level_Generic extends Phaser.Scene {
         }
 
     }
+
+    nextLevel(){
+
+        /*
+        this.cat.x = 0;
+        this.cat.y = 0;
+        currentLevel += 1;
+        this.scene.pause();
+        this.scene.resume(levels[currentLevel]);
+        */
+
+    }
+
 
 }

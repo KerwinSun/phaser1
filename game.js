@@ -17,7 +17,9 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-game.scene.add('Level_Generic1', Level_Generic, true, { x: 100, y: 100});
-game.scene.add('Level_Generic2', Level_Generic, true, { x: 500, y: 100});
-game.scene.add('Level_Generic3', Level_Generic, true, { x: 800, y: 100});
-game.scene.add('Level_Generic4', Level_Generic, true, { x: 1200, y: 100});
+game.scene.add('lvl0', Level_Generic, true, { x: 50, y: 100});
+game.scene.add('lvl1`', Level_Generic, true, { x: 300, y: 100});
+game.scene.add('lvl2', Level_Generic, true, { x: 550, y: 100});
+game.scene.add('lvl3', Level_Generic, true, { x: 800, y: 100});
+currentLevel = 0;
+levels = ['lvl0','lvl1','lvl2','lvl3']
