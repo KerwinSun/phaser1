@@ -21,8 +21,6 @@ class Level_Generic extends Phaser.Scene {
 
     create(data){
 
-
-
         //set up camera and background
         this.cameras.main.setBackgroundColor('rgba(255,255,255,1)');
         this.cameras.main.x = data.x;
@@ -58,6 +56,8 @@ class Level_Generic extends Phaser.Scene {
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        console.log(this.cat)
+
 
 
     }
@@ -66,6 +66,7 @@ class Level_Generic extends Phaser.Scene {
 
 
         if(this.key_A.isDown){
+            console.log(this.scene.key)
             this.cat.x -= 6;
             this.trace.push([this.cat.x,this.cat.y]);
         }
@@ -102,6 +103,10 @@ class Level_Generic extends Phaser.Scene {
     detect() {
         this.cat.x = 0;
         this.cat.y = 0;
+            console.log('down');
+            this.scene.pause();
+            this.scene.resume('Level_Generic2');
+
     }
 
     traceRoute(){
