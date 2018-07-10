@@ -62,35 +62,24 @@ class Level_Generic extends Phaser.Scene {
 
     update(delta){
 
-
-        if(this.key_A.isDown){
-            this.cat.x -= 6;
-            this.trace.push([this.cat.x,this.cat.y]);
+        if(this.gameActive) {
+            if (this.key_A.isDown) {
+                this.cat.x -= 6;
+                this.trace.push([this.cat.x, this.cat.y]);
+            }
+            if (this.key_D.isDown) {
+                this.cat.x += 6;
+                this.trace.push([this.cat.x, this.cat.y]);
+            }
+            if (this.key_S.isDown) {
+                this.cat.y += 6;
+                this.trace.push([this.cat.x, this.cat.y]);
+            }
+            if (this.key_W.isDown) {
+                this.cat.y -= 6;
+                this.trace.push([this.cat.x, this.cat.y]);
+            }
         }
-        if(this.key_D.isDown){
-            this.cat.x += 6;
-            this.trace.push([this.cat.x,this.cat.y]);
-        }
-        if(this.key_S.isDown){
-            this.cat.y += 6;
-            this.trace.push([this.cat.x,this.cat.y]);
-        }
-        if(this.key_W.isDown){
-            this.cat.y -= 6;
-            this.trace.push([this.cat.x,this.cat.y]);
-        }
-
-        //press spacebar to trace
-        if(this.key_SPACE.isDown && this.gameActive){
-
-
-            this.startTrace();
-
-            //complete draw
-
-
-        }
-
     }
 
     startTrace(){
@@ -120,20 +109,17 @@ class Level_Generic extends Phaser.Scene {
         if(this.trace.length < 1){
 
             this.timedEvent.destroy();
-
+            this.nextLevel();
         }
 
     }
 
     nextLevel(){
 
-        /*
-        this.cat.x = 0;
-        this.cat.y = 0;
         currentLevel += 1;
         this.scene.pause();
         this.scene.resume(levels[currentLevel]);
-        */
+
 
     }
 
