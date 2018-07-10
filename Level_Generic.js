@@ -13,12 +13,23 @@ class Level_Generic extends Phaser.Scene {
 
         //preload assets images
         this.load.image('ball','assets/ball.png');
-        this.load.image('man','assets/man.png');
         this.load.image('cat','assets/cat.PNG');
 
     }
 
-    create(){
+    create(data){
+
+
+
+        //set up camera and background
+        this.cameras.main.setBackgroundColor('rgba(255,255,255,1)');
+        this.cameras.main.x = data.x;
+        this.cameras.main.y = data.y;
+        this.cameras.main.width = 200;
+        this.cameras.main.height = 200;
+
+        this.zzx = data.x - this.cameras.main.width/2;
+        this.zzy = data.y - this.cameras.main.height/2;
 
         //useful vars to track
         this.gameActive = true;
@@ -29,11 +40,13 @@ class Level_Generic extends Phaser.Scene {
         this.graphics.lineStyle(5, 0xFF00FF);
         console.log(this)
 
-        //add ball entity
-        this.cat = this.physics.add.image(0, 0, 'cat');
-        this.ball = this.physics.add.image(400,300,'ball');
+        //add ball entity/ cat entity/ background entity
+        this.cat = this.physics.add.image(this.zzx +  20, this.zzy + 20, 'cat');
+        this.ball = this.physics.add.image(data.x, data.y,'ball');
         this.cat.scaleX = 0.2;
         this.cat.scaleY = 0.2;
+        this.ball.scaleX = 0.5;
+        this.ball.scaleY = 0.5;
 
         //add collision to ball
         this.physics.add.overlap(this.cat,this.ball, this.detect, null, this);
@@ -44,7 +57,6 @@ class Level_Generic extends Phaser.Scene {
         this.key_S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
 
 
 
@@ -76,7 +88,7 @@ class Level_Generic extends Phaser.Scene {
             this.gameActive = false;
             //set up draw
             this.graphics.beginPath();
-            this.graphics.moveTo(0, 0);
+            this.graphics.moveTo(this.trace[0][0], this.trace[0][1]);
             console.log(this.timedEvent);
             this.timedEvent = this.time.addEvent({ delay: 10, callback: this.traceRoute, callbackScope: this, loop: true });
 

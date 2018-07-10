@@ -1,8 +1,8 @@
 var config = {
 
     type:Phaser.AUTO,
-    width: 800,
-    height:600,
+    width: 1800,
+    height:800,
     physics:{
 
         default:'arcade',
@@ -13,9 +13,8 @@ var config = {
         }
 
 
-    },
-
-    scene:[ Level_Generic, Example1, Example2]
+    }
 };
 
 var game = new Phaser.Game(config);
+game.scene.add('Level_Generic', Level_Generic, true, { x: 100, y: 100});
