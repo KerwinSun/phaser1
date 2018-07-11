@@ -21,6 +21,7 @@ class Level_Generic extends Phaser.Scene {
 
     create(data){
 
+        console.log(this)
         //set up camera and background
         this.cameras.main.setBackgroundColor('rgba(255,255,255,1)');
         this.cameras.main.x = data.x;
@@ -41,7 +42,7 @@ class Level_Generic extends Phaser.Scene {
         this.trace = [[this.player.x,this.player.y]];
         this.graphics = this.add.graphics(100, 100);
         this.graphics.lineStyle(5, 0xFF00FF);
-        console.log(this)
+
 
         this.player.scaleX = 0.5;
         this.player.scaleY = 0.5;
@@ -62,6 +63,9 @@ class Level_Generic extends Phaser.Scene {
 
     update(delta){
 
+        if (this.key_SPACE.isDown) {
+            console.log(this.scene.key);
+        }
         if(this.gameActive) {
             if (this.key_A.isDown) {
                 this.player.x -= 6;
@@ -115,11 +119,9 @@ class Level_Generic extends Phaser.Scene {
     }
 
     nextLevel(){
-
         currentLevel += 1;
         this.scene.pause();
         this.scene.resume(levels[currentLevel]);
-
 
     }
 
