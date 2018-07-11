@@ -14,8 +14,8 @@ class Level_Generic extends Phaser.Scene {
         this.load.crossOrigin = false;
 
         //preload assets images
-        this.load.image(this.scene.key + 'ball','assets/ball.png');
-        this.load.image(this.scene.key + 'cat','assets/cat.PNG');
+        this.load.image(this.scene.key + 'exit','assets/exit.png');
+        this.load.image(this.scene.key + 'player','assets/player.PNG');
 
     }
 
@@ -32,24 +32,24 @@ class Level_Generic extends Phaser.Scene {
 
 
 
-        //add ball entity/ cat entity/ background entity
-        this.cat = this.physics.add.image(20, 20, this.scene.key + 'cat');
-        this.ball = this.physics.add.image(100, 100, this.scene.key + 'ball');
+        //add exit entity/ player entity/ background entity
+        this.player = this.physics.add.image(20, 20, this.scene.key + 'player');
+        this.exit = this.physics.add.image(100, 100, this.scene.key + 'exit');
 
 
-        //record location where entity travelled
-        this.trace = [[this.cat.x,this.cat.y]];
+        //record loplayerion where entity travelled
+        this.trace = [[this.player.x,this.player.y]];
         this.graphics = this.add.graphics(100, 100);
         this.graphics.lineStyle(5, 0xFF00FF);
         console.log(this)
 
-        this.cat.scaleX = 0.2;
-        this.cat.scaleY = 0.2;
-        this.ball.scaleX = 0.5;
-        this.ball.scaleY = 0.5;
+        this.player.scaleX = 0.5;
+        this.player.scaleY = 0.5;
+        this.exit.scaleX = 0.7;
+        this.exit.scaleY = 0.7;
 
-        //add collision to ball
-        this.physics.add.overlap(this.cat,this.ball, this.startTrace, null, this);
+        //add collision to exit
+        this.physics.add.overlap(this.player,this.exit, this.startTrace, null, this);
 
         //set key polls
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -64,20 +64,20 @@ class Level_Generic extends Phaser.Scene {
 
         if(this.gameActive) {
             if (this.key_A.isDown) {
-                this.cat.x -= 6;
-                this.trace.push([this.cat.x, this.cat.y]);
+                this.player.x -= 6;
+                this.trace.push([this.player.x, this.player.y]);
             }
             if (this.key_D.isDown) {
-                this.cat.x += 6;
-                this.trace.push([this.cat.x, this.cat.y]);
+                this.player.x += 6;
+                this.trace.push([this.player.x, this.player.y]);
             }
             if (this.key_S.isDown) {
-                this.cat.y += 6;
-                this.trace.push([this.cat.x, this.cat.y]);
+                this.player.y += 6;
+                this.trace.push([this.player.x, this.player.y]);
             }
             if (this.key_W.isDown) {
-                this.cat.y -= 6;
-                this.trace.push([this.cat.x, this.cat.y]);
+                this.player.y -= 6;
+                this.trace.push([this.player.x, this.player.y]);
             }
         }
     }
@@ -88,7 +88,7 @@ class Level_Generic extends Phaser.Scene {
 
         if(this.gameActive) {
             this.graphics.beginPath();
-            this.graphics.moveTo(this.cat.x, this.cat.y);
+            this.graphics.moveTo(this.player.x, this.player.y);
             this.timedEvent = this.time.addEvent({
                 delay: 10,
                 callback: this.traceRoute,
@@ -101,8 +101,8 @@ class Level_Generic extends Phaser.Scene {
 
     traceRoute(){
 
-        this.cat.x = this.trace[this.trace.length - 1][0];
-        this.cat.y = this.trace[this.trace.length - 1][1];
+        this.player.x = this.trace[this.trace.length - 1][0];
+        this.player.y = this.trace[this.trace.length - 1][1];
         this.graphics.lineTo(this.trace[this.trace.length - 1][0],this.trace[this.trace.length - 1][1]);
         this.graphics.strokePath();
         this.trace.splice(this.trace.length - 1,1);

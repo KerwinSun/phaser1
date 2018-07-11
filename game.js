@@ -1,7 +1,7 @@
 var config = {
 
     type:Phaser.AUTO,
-    width: 1800,
+    width: 1900,
     height:800,
     physics:{
 
