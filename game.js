@@ -16,7 +16,7 @@ var config = {
     }
 };
 //change this to generate more lvls
-maxlvl = 8;
+maxlvl = 123;
 var game = new Phaser.Game(config);
 
 
@@ -30,8 +30,9 @@ for(var i = 0; i < maxlvl; i++){
     game.scene.add(sceneName, Level_Generic, true, { x: xpos, y: 100});
     levels .push(sceneName);
     console.log(xpos);
-    xpos += xstep;
-
+	aSDAsdQW	E
+    xposadasd
+ASDasdASD
 }
 
 
