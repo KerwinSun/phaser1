@@ -28,10 +28,11 @@ for(var i = 0; i < maxlvl; i++){
 
     var sceneName = 'lvl' + i;
     game.scene.add(sceneName, Level_Generic, true, { x: xpos, y: 100});
-    levels .push(sceneName);
-    console.log(xpos);
-    xpos += xstep;
-
+ asdljq liwe
+ q wek ;
+	 we ;lqkw ;qke ;
+	 
+	 qw	ek	qwe if )(
 }
 
 
